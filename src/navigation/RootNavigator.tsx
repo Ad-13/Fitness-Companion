@@ -3,9 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import SensorScreen from '../screens/SensorScreen';
+import DeviceListScreen from '../screens/DeviceListScreen';
 
 export type RootStackParamList = {
   Home: undefined;
+  DeviceList: undefined;
   Sensor: undefined;
 };
 
@@ -15,6 +17,7 @@ const RootNavigator: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        id={undefined}
         initialRouteName="Home"
         screenOptions={{
           headerStyle: { backgroundColor: '#f5f5f5' },
@@ -26,6 +29,11 @@ const RootNavigator: React.FC = () => {
           name="Home"
           component={HomeScreen}
           options={{ title: 'Home' }}
+        />
+        <Stack.Screen
+          name="DeviceList"
+          component={DeviceListScreen}
+          options={{ title: 'Available Devices' }}
         />
         <Stack.Screen
           name="Sensor"

@@ -87,6 +87,10 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace 'com.anonymous.FitnessCompanion'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
     defaultConfig {
         applicationId 'com.anonymous.FitnessCompanion'
         minSdkVersion rootProject.ext.minSdkVersion

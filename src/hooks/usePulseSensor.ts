@@ -1,25 +1,33 @@
 import { useEffect, useState } from 'react';
 
+type Device = {
+  id: string;
+  name: string;
+};
+
 export function usePulseSensor() {
   const [pulse, setPulse] = useState(72);
   const [isConnecting, setIsConnecting] = useState(true);
+  const [devices, setDevices] = useState<Device[]>([]);
 
   useEffect(() => {
-    const connectTimeout = setTimeout(() => {
+    const scanTimeout = setTimeout(() => {
+      setDevices([
+        { id: 'dev-1', name: 'Pulse Sensor A' },
+        { id: 'dev-2', name: 'Pulse Sensor B' },
+      ]);
       setIsConnecting(false);
-      const interval = setInterval(() => {
-        setPulse((prevPulse) => {
-          const change = Math.random() * 4 - 2;
-          let newPulse = prevPulse + change;
-          return Math.round(newPulse);
-        });
-      }, 1000);
+    }, 2000);
 
-      return () => clearInterval(interval);
+    const pulseInterval = setInterval(() => {
+      setPulse(prev => Math.max(60, Math.min(120, prev + Math.round(Math.random() * 4 - 2))));
     }, 1000);
 
-    return () => clearTimeout(connectTimeout);
+    return () => {
+      clearTimeout(scanTimeout);
+      clearInterval(pulseInterval);
+    };
   }, []);
 
-  return { pulse, isConnecting };
+  return { pulse, isConnecting, devices };
 }
