@@ -27,7 +27,7 @@ const DeviceListScreen: React.FC<Props> = ({ navigation }) => {
         renderItem={({ item }) => (
           <TouchableOpacity 
             style={styles.deviceItem}
-            onPress={() => navigation.navigate('Sensor')}  // Переход на экран сенсора
+            onPress={() => navigation.navigate('Sensor')}
           >
             <Text style={styles.deviceName}>{item.name || 'Unknown Device'}</Text>
             <Text style={styles.deviceId}>{item.id}</Text>

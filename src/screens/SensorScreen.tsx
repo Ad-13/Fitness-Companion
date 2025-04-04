@@ -34,7 +34,7 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
       if (prevHistory.length > 0 && prevHistory[prevHistory.length - 1] === pulse) {
         return prevHistory;
       }
-      const newHistory = [...prevHistory, pulse];
+      const newHistory = [...prevHistory, pulse].slice(-20);
       AsyncStorage.setItem('pulseHistory', JSON.stringify(newHistory));
       return newHistory;
     });
