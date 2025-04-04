@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   ScrollView,
   Dimensions,
+  Animated,
 } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
@@ -19,6 +20,7 @@ import CustomChart from '../components/CustomChart';
 type Props = StackScreenProps<RootStackParamList, 'Sensor'>;
 
 const SensorScreen: React.FC<Props> = ({ navigation }) => {
+  const pulseAnimation = useRef(new Animated.Value(1)).current;
   const { pulse, isConnecting } = usePulseSensor();
   const [pulseHistory, setPulseHistory] = useState<number[]>([]);
   const [showCustomChart, setShowCustomChart] = useState(false);
@@ -36,6 +38,19 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
       AsyncStorage.setItem('pulseHistory', JSON.stringify(newHistory));
       return newHistory;
     });
+
+    Animated.sequence([
+      Animated.timing(pulseAnimation, {
+        toValue: 1.2,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(pulseAnimation, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
   }, [pulse, isConnecting]);
 
   return (
@@ -45,7 +60,9 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
         <ActivityIndicator size="large" color="#2196f3" />
       ) : (
         <View style={styles.pulseContainer}>
-          <Icon name="heart-pulse" size={48} color="#e53935" />
+          <Animated.View style={{ transform: [{ scale: pulseAnimation }] }}>
+            <Icon name="heart-pulse" size={48} color="#e53935" />
+          </Animated.View>
           <Text style={styles.pulse}>{pulse} BPM</Text>
         </View>
       )}
@@ -68,15 +85,21 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
       {pulseHistory.length > 0 && (
         <>
           {showCustomChart ? (
-            <CustomChart
-              data={pulseHistory}
-              width={Dimensions.get('window').width - 32}
-              height={300}
-            />
+            <>
+              <Text style={styles.chartTitle}>Custom Pulse Chart</Text>
+              <CustomChart
+                data={pulseHistory}
+                width={Dimensions.get('window').width - 32}
+                height={300}
+              />
+            </>
           ) : (
-            <View style={styles.chart}>
-              <LineChart data={chatData} scrollToEnd scrollAnimation />
-            </View>
+            <>
+              <Text style={styles.chartTitle}>Library Pulse Chart</Text>
+              <View style={styles.chart}>
+                <LineChart data={chatData} scrollToEnd scrollAnimation />
+              </View>
+            </>
           )}
         </>
       )}
@@ -100,6 +123,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     alignSelf: 'center',
   },
+  chartTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+    alignSelf: 'flex-start',
+    marginLeft: 16,
+  },
   toggleChartText: {
     color: '#fff',
     fontSize: 16,
@@ -120,7 +151,6 @@ const styles = StyleSheet.create({
   icon: { marginRight: 8 },
   backButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
   chartContainer: { width: '100%', height: 300, alignItems: 'center', marginTop: 16 },
-  chartTitle: { fontSize: 20, fontWeight: '600', marginBottom: 8 },
 });
 
 export default SensorScreen;
