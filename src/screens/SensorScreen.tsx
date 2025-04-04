@@ -55,7 +55,7 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Ваш пульс</Text>
+      <Text style={styles.title}>Your pulse</Text>
       {isConnecting ? (
         <ActivityIndicator size="large" color="#2196f3" />
       ) : (
@@ -66,11 +66,11 @@ const SensorScreen: React.FC<Props> = ({ navigation }) => {
           <Text style={styles.pulse}>{pulse} BPM</Text>
         </View>
       )}
-      <Text style={styles.hint}>Нажмите &quot;Назад&quot; для возвращения</Text>
+      <Text style={styles.hint}>Press &quot;Back&quot; for return</Text>
 
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Icon name="arrow-left" size={24} color="#fff" style={styles.icon} />
-        <Text style={styles.backButtonText}>Назад</Text>
+        <Text style={styles.backButtonText}>Back</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 8,
     marginBottom: 32,
+    flexDirection: 'row'
   },
   icon: { marginRight: 8 },
   backButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },

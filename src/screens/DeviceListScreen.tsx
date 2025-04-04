@@ -13,14 +13,14 @@ const DeviceListScreen: React.FC<Props> = ({ navigation }) => {
     return (
       <View style={[styles.container, styles.centered]}>
         <ActivityIndicator size="large" />
-        <Text style={styles.loadingText}>Поиск устройств...</Text>
+        <Text style={styles.loadingText}>Search for devices...</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Доступные устройства</Text>
+      <Text style={styles.title}>Available devices</Text>
       <FlatList
         data={devices}
         keyExtractor={(item) => item.id}
@@ -29,12 +29,12 @@ const DeviceListScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.deviceItem}
             onPress={() => navigation.navigate('Sensor')}  // Переход на экран сенсора
           >
-            <Text style={styles.deviceName}>{item.name || 'Неизвестное устройство'}</Text>
+            <Text style={styles.deviceName}>{item.name || 'Unknown Device'}</Text>
             <Text style={styles.deviceId}>{item.id}</Text>
           </TouchableOpacity>
         )}
         ListEmptyComponent={
-          <Text style={styles.emptyText}>Устройства не найдены...</Text>
+          <Text style={styles.emptyText}>Devices not found...</Text>
         }
       />
     </View>

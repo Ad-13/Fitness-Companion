@@ -9,12 +9,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Fitness Companion</Text>
-      {/* <Button
-        title="Подключиться к датчику"
-        onPress={() => navigation.navigate('Sensor')}
-      /> */}
       <Button
-        title="Найти устройства"
+        title="Search devices"
         onPress={() => navigation.navigate('DeviceList')}
       />
     </View>
