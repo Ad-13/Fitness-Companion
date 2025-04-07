@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
-import { usePulseSensor } from '../hooks/usePulseSensor';
+import { useDevices } from '../hooks/useDevices';
 
 type Props = StackScreenProps<RootStackParamList, 'DeviceList'>;
 
 const DeviceListScreen: React.FC<Props> = ({ navigation }) => {
-  const { devices, isConnecting } = usePulseSensor();
+  const { devices, isConnecting } = useDevices();
 
   if (isConnecting) {
     return (
