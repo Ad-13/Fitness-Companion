@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../types';
 
 type Props = StackScreenProps<RootStackParamList, 'Home'>;
 

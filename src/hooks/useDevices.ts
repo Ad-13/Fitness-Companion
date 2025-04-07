@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-
-type Device = {
-  id: string;
-  name: string;
-};
+import { Device } from '../types';
 
 export function useDevices() {
   const [isConnecting, setIsConnecting] = useState(true);

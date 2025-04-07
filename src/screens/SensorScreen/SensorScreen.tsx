@@ -1,47 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Animated,
 } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../navigation/RootNavigator';
-import { usePulseSensor } from '../../hooks/usePulseSensor';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { usePulseSensor } from '../../hooks/usePulseSensor';
 import ChartBlock from './components/ChartBlock';
+import AnimatedPulse from './components/AnimatedPulse';
+import { RootStackParamList } from '../../types';
 
 type Props = StackScreenProps<RootStackParamList, 'Sensor'>;
 
 const SensorScreen: React.FC<Props> = ({ navigation }) => {
-  const pulseAnimation = useRef(new Animated.Value(1)).current;
   const { pulse } = usePulseSensor();
-
-  useEffect(() => {
-    Animated.sequence([
-      Animated.timing(pulseAnimation, {
-        toValue: 1.2,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(pulseAnimation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }),
-    ]).start();
-  }, [pulse]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Your pulse</Text>
 
       <View style={styles.pulseContainer}>
-        <Animated.View style={{ transform: [{ scale: pulseAnimation }] }}>
-          <Icon name="heart-pulse" size={48} color="#e53935" />
-        </Animated.View>
+        <AnimatedPulse pulse={pulse} />
         <Text style={styles.pulse}>{pulse} BPM</Text>
       </View>
       <Text style={styles.hint}>Press &quot;Back&quot; for return</Text>

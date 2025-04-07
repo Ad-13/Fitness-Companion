@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import type { StackScreenProps } from '@react-navigation/stack';
-import type { RootStackParamList } from '../navigation/RootNavigator';
 import { useDevices } from '../hooks/useDevices';
+import { RootStackParamList } from '../types';
 
 type Props = StackScreenProps<RootStackParamList, 'DeviceList'>;
 

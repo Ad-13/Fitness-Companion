@@ -4,12 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import SensorScreen from '../screens/SensorScreen';
 import DeviceListScreen from '../screens/DeviceListScreen';
-
-export type RootStackParamList = {
-  Home: undefined;
-  DeviceList: undefined;
-  Sensor: undefined;
-};
+import { RootStackParamList } from '../types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
